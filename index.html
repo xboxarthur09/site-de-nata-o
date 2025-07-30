@@ -7,75 +7,123 @@
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: 'Arial', sans-serif;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #e0f7fa;
+      color: #004d40;
       line-height: 1.6;
-      margin: 0;
+    }
+
+    header {
+      background-color: #004080;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ffd700;
+      transform: scale(1.1);
     }
 
     h1, h2, h3 {
+      text-align: center;
+      margin-top: 30px;
       color: #00796b;
     }
 
-    h1 {
-      text-align: center;
+    section {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
     }
 
-    img, video {
+    ul {
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    img {
       max-width: 100%;
       border-radius: 10px;
-      margin: 10px 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 10px;
     }
 
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
+    img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
-    .gallery img {
-      width: 200px;
-      object-fit: cover;
+    video {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
     }
 
     .athlete {
-      margin-bottom: 40px;
-      padding: 20px;
-      background-color: #ffffffc9;
+      background: #ffffffd0;
+      padding: 25px;
       border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .athlete:hover {
+      transform: translateY(-5px);
+    }
+
+    form {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      max-width: 800px;
+      margin: 40px auto;
     }
 
     .question {
       margin-bottom: 20px;
     }
 
-    form {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      max-width: 800px;
-      margin: auto;
-    }
-
     button {
-      padding: 10px 20px;
+      padding: 12px 25px;
       background-color: #00796b;
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       font-size: 16px;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     button:hover {
       background-color: #004d40;
+      transform: scale(1.05);
     }
 
     #result {
@@ -83,194 +131,393 @@
       font-weight: bold;
       color: #2e7d32;
       text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .form-container {
+      background-color: rgba(0, 64, 128, 0.9);
+      max-width: 700px;
+      margin: 80px auto;
+      padding: 30px;
+      border-radius: 8px;
+      color: white;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-row input,
+    textarea {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid white;
+      background: transparent;
+      color: white;
+      font-size: 1rem;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #ccc;
+    }
+
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 60px;
+    }
+
+    footer button {
+      background-color: transparent;
+      border: 1px solid white;
+      color: white;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-size: 0.95rem;
+    }
+
+    footer button:hover {
+      background-color: white;
+      color: #004080;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      position: relative;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .autor-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .autor {
+      text-align: center;
+      max-width: 200px;
+    }
+
+    .autor img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      color: #aaa;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .form-row {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
 
+<header>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#questionario">Questionário</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="home">
   <h1>Clube de Natação</h1>
 
   <h2>Sobre a Natação</h2>
   <p>
     A natação é uma atividade física que consiste no deslocamento do corpo na água por meio de movimentos coordenados, principalmente dos braços e das pernas. Existem quatro estilos oficiais: crawl (livre), peito, costas e borboleta, cada um com técnicas e exigências específicas.
-
-Desde os tempos antigos, a humanidade desenvolveu uma forte relação com a água, em razão de sua ampla disponibilidade na natureza. O ambiente aquático foi utilizado, inicialmente, como meio de sobrevivência, transporte e lazer. Com o passar dos séculos, a natação se consolidou também como um esporte, ganhando espaço em treinamentos sistemáticos, competições e eventos de grande prestígio.
-
-Além de sua importância esportiva, a prática da natação traz inúmeros benefícios à saúde. Ela contribui significativamente para o condicionamento cardiorrespiratório, a coordenação motora e o fortalecimento muscular. Por isso, é considerada uma das atividades físicas mais completas.
-
-A natação pode ser praticada por pessoas de todas as idades, tanto em ambientes competitivos quanto de forma recreativa, sendo uma excelente escolha para quem busca bem-estar, qualidade de vida ou simplesmente momentos de diversão na água.
+    <br><br>
+    Desde os tempos antigos, a humanidade desenvolveu uma forte relação com a água, em razão de sua ampla disponibilidade na natureza. O ambiente aquático foi utilizado, inicialmente, como meio de sobrevivência, transporte e lazer. Com o passar dos séculos, a natação se consolidou também como um esporte, ganhando espaço em treinamentos sistemáticos, competições e eventos de grande prestígio.
+    <br><br>
+    Além de sua importância esportiva, a prática da natação traz inúmeros benefícios à saúde. Ela contribui significativamente para o condicionamento cardiorrespiratório, a coordenação motora e o fortalecimento muscular. Por isso, é considerada uma das atividades físicas mais completas.
   </p>
 
   <h3>Estilos de Nado</h3>
   <ul>
     <li><strong>Crawl (Livre)</strong> – o mais rápido, exige boa coordenação entre braços e respiração.</li>
-  <img src="crawl.png" alt="Swimmer wearing a green swim cap performing the front crawl stroke in a clear blue swimming pool, arm extended forward, surrounded by lane dividers, bright and energetic atmosphere">
-   <li><strong>Peito</strong> – movimentos simultâneos dos braços e pernas; foco em técnica e resistência.</li>
-  <img src="peito.jpg" alt="Swimmer performing the breaststroke in a pool, arms extended forward and breaking through the water, droplets splashing around, muscular shoulders visible, wearing a black swim cap with Speedo logo, competitive and intense atmosphere in an indoor swimming arena">
-  <li><strong>Borboleta</strong> – o mais difícil, exige força e sincronia total.</li>
-  <img src="borbo.jpg" alt="">
-   <li><strong>Costas</strong> – feito de barriga para cima, com movimentação constante de braços e pernas.</li>
- <img src="costas.jpg" alt="">
+    <img src="crawl.png" alt="Estilo Crawl">
+    <li><strong>Peito</strong> – movimentos simultâneos dos braços e pernas; foco em técnica e resistência.</li>
+    <img src="peito.jpg" alt="Estilo Peito">
+    <li><strong>Borboleta</strong> – o mais difícil, exige força e sincronia total.</li>
+    <img src="borbo.jpg" alt="Estilo Borboleta">
+    <li><strong>Costas</strong> – feito de barriga para cima, com movimentação constante de braços e pernas.</li>
+    <img src="costas.jpg" alt="Estilo Costas">
   </ul>
 
   <h3>🎥 Vídeo: Benefícios da Natação</h3>
-  <video controls>
-    <source src="https://www.youtube.com/watch?v=dBpfF5jM0Es" type="video/mp4">
-    Seu navegador não suporta vídeos.
-  </video>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/dBpfF5jM0Es?si=_v9OMsUwlyeSIGBt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</section>
 
-
+<!-- Nadadores -->
+<section>
   <h2>🏆 Maiores Nadadores da História</h2>
 
   <div class="athlete">
     <h3>🏅 Michael Phelps</h3>
     <p>O maior nadador olímpico de todos os tempos, com <strong>23 medalhas de ouro</strong>.</p>
     <img src="michael.jpg" alt="Michael Phelps" />
-    <video controls>
-      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-      Seu navegador não suporta vídeos.
-    </video>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/UmIYanq5gH8?si=U-O3PhAzbIPhbjOr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 
   <div class="athlete">
     <h3>🏅 Katie Ledecky</h3>
     <p>Nadadora americana, especialista em provas de longa distância, com <strong>7 ouros olímpicos</strong>.</p>
     <img src="katye.webp" alt="Katie Ledecky" />
-    <video controls>
-      <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
-      Seu navegador não suporta vídeos.
-    </video>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/myRFzVmH1tg?si=zQVtwWMRHx1XoeoK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
+</section>
 
+<!-- Questionário -->
+<section id="questionario">
   <h2>📝 Questionário - Teste seus conhecimentos</h2>
   <form id="quizForm">
-    <div class="question">
-      <label>1. Qual estilo de nado é o mais rápido?</label><br>
-      <input type="radio" name="q1" value="a"> Peito<br>
-      <input type="radio" name="q1" value="b"> Borboleta<br>
-      <input type="radio" name="q1" value="c"> Crawl<br>
-      <input type="radio" name="q1" value="d"> Costas
-    </div>
+    <!-- As 10 perguntas foram mantidas no mesmo formato anterior -->
+    <!-- Você pode colar suas perguntas completas aqui ou manter do exemplo acima -->
+    <form id="quizForm">
+  <div class="question">
+    <label>1. Qual estilo de nado é o mais rápido?</label><br>
+    <input type="radio" name="q1" value="a"> Peito<br>
+    <input type="radio" name="q1" value="b"> Borboleta<br>
+    <input type="radio" name="q1" value="c"> Crawl<br>
+    <input type="radio" name="q1" value="d"> Costas
+  </div>
 
-    <div class="question">
-      <label>2. Quem é o maior medalhista olímpico da história?</label><br>
-      <input type="radio" name="q2" value="a"> Usain Bolt<br>
-      <input type="radio" name="q2" value="b"> Michael Phelps<br>
-      <input type="radio" name="q2" value="c"> Ian Thorpe<br>
-      <input type="radio" name="q2" value="d"> César Cielo
-    </div>
+  <div class="question">
+    <label>2. Quem é o maior medalhista olímpico da história?</label><br>
+    <input type="radio" name="q2" value="a"> Usain Bolt<br>
+    <input type="radio" name="q2" value="b"> Michael Phelps<br>
+    <input type="radio" name="q2" value="c"> Ian Thorpe<br>
+    <input type="radio" name="q2" value="d"> César Cielo
+  </div>
 
-    <div class="question">
-      <label>3. Qual desses estilos é feito de barriga para cima?</label><br>
-      <input type="radio" name="q3" value="a"> Crawl<br>
-      <input type="radio" name="q3" value="b"> Costas<br>
-      <input type="radio" name="q3" value="c"> Peito<br>
-      <input type="radio" name="q3" value="d"> Borboleta
-    </div>
+  <div class="question">
+    <label>3. Qual desses estilos é feito de barriga para cima?</label><br>
+    <input type="radio" name="q3" value="a"> Crawl<br>
+    <input type="radio" name="q3" value="b"> Costas<br>
+    <input type="radio" name="q3" value="c"> Peito<br>
+    <input type="radio" name="q3" value="d"> Borboleta
+  </div>
 
-    <div class="question">
-      <label>4. Qual estilo de nado exige mais sincronia e força?</label><br>
-      <input type="radio" name="q4" value="a"> Costas<br>
-      <input type="radio" name="q4" value="b"> Crawl<br>
-      <input type="radio" name="q4" value="c"> Peito<br>
-      <input type="radio" name="q4" value="d"> Borboleta
-    </div>
+  <div class="question">
+    <label>4. Qual estilo de nado exige mais sincronia e força?</label><br>
+    <input type="radio" name="q4" value="a"> Costas<br>
+    <input type="radio" name="q4" value="b"> Crawl<br>
+    <input type="radio" name="q4" value="c"> Peito<br>
+    <input type="radio" name="q4" value="d"> Borboleta
+  </div>
 
-    <div class="question">
-      <label>5. Quem é Katie Ledecky?</label><br>
-      <input type="radio" name="q5" value="a"> Nadadora de provas curtas<br>
-      <input type="radio" name="q5" value="b"> Nadadora especialista em maratona aquática<br>
-      <input type="radio" name="q5" value="c"> Nadadora americana de longa distância<br>
-      <input type="radio" name="q5" value="d"> Treinadora de natação
-    </div>
+  <div class="question">
+    <label>5. Quem é Katie Ledecky?</label><br>
+    <input type="radio" name="q5" value="a"> Nadadora de provas curtas<br>
+    <input type="radio" name="q5" value="b"> Nadadora especialista em maratona aquática<br>
+    <input type="radio" name="q5" value="c"> Nadadora americana de longa distância<br>
+    <input type="radio" name="q5" value="d"> Treinadora de natação
+  </div>
 
-    <div class="question">
-      <label>6. Quantas medalhas de ouro Michael Phelps ganhou?</label><br>
-      <input type="radio" name="q6" value="a"> 10<br>
-      <input type="radio" name="q6" value="b"> 15<br>
-      <input type="radio" name="q6" value="c"> 20<br>
-      <input type="radio" name="q6" value="d"> 23
-    </div>
+  <div class="question">
+    <label>6. Quantas medalhas de ouro Michael Phelps ganhou?</label><br>
+    <input type="radio" name="q6" value="a"> 10<br>
+    <input type="radio" name="q6" value="b"> 15<br>
+    <input type="radio" name="q6" value="c"> 20<br>
+    <input type="radio" name="q6" value="d"> 23
+  </div>
 
-    <div class="question">
-      <label>7. Qual desses benefícios NÃO está diretamente ligado à natação?</label><br>
-      <input type="radio" name="q7" value="a"> Melhora da respiração<br>
-      <input type="radio" name="q7" value="b"> Fortalecimento muscular<br>
-      <input type="radio" name="q7" value="c"> Melhora da visão<br>
-      <input type="radio" name="q7" value="d"> Bem-estar mental
-    </div>
+  <div class="question">
+    <label>7. Qual desses benefícios NÃO está diretamente ligado à natação?</label><br>
+    <input type="radio" name="q7" value="a"> Melhora da respiração<br>
+    <input type="radio" name="q7" value="b"> Fortalecimento muscular<br>
+    <input type="radio" name="q7" value="c"> Melhora da visão<br>
+    <input type="radio" name="q7" value="d"> Bem-estar mental
+  </div>
 
-    <div class="question">
-      <label>8. Qual estilo exige mais técnica e resistência simultâneas?</label><br>
-      <input type="radio" name="q8" value="a"> Crawl<br>
-      <input type="radio" name="q8" value="b"> Peito<br>
-      <input type="radio" name="q8" value="c"> Costas<br>
-      <input type="radio" name="q8" value="d"> Borboleta
-    </div>
+  <div class="question">
+    <label>8. Qual estilo exige mais técnica e resistência simultâneas?</label><br>
+    <input type="radio" name="q8" value="a"> Crawl<br>
+    <input type="radio" name="q8" value="b"> Peito<br>
+    <input type="radio" name="q8" value="c"> Costas<br>
+    <input type="radio" name="q8" value="d"> Borboleta
+  </div>
 
-    <div class="question">
-      <label>9. Em qual país nasceu Michael Phelps?</label><br>
-      <input type="radio" name="q9" value="a"> Austrália<br>
-      <input type="radio" name="q9" value="b"> Canadá<br>
-      <input type="radio" name="q9" value="c"> Estados Unidos<br>
-      <input type="radio" name="q9" value="d"> Reino Unido
-    </div>
+  <div class="question">
+    <label>9. Em qual país nasceu Michael Phelps?</label><br>
+    <input type="radio" name="q9" value="a"> Austrália<br>
+    <input type="radio" name="q9" value="b"> Canadá<br>
+    <input type="radio" name="q9" value="c"> Estados Unidos<br>
+    <input type="radio" name="q9" value="d"> Reino Unido
+  </div>
 
-    <div class="question">
-      <label>10. A natação pode ser praticada para:</label><br>
-      <input type="radio" name="q10" value="a"> Apenas competições<br>
-      <input type="radio" name="q10" value="b"> Apenas lazer<br>
-      <input type="radio" name="q10" value="c"> Apenas condicionamento físico<br>
-      <input type="radio" name="q10" value="d"> Todas as alternativas
-    </div>
-
+  <div class="question">
+    <label>10. A natação pode ser praticada para:</label><br>
+    <input type="radio" name="q10" value="a"> Apenas competições<br>
+    <input type="radio" name="q10" value="b"> Apenas lazer<br>
+    <input type="radio" name="q10" value="c"> Apenas condicionamento físico<br>
+    <input type="radio" name="q10" value="d"> Todas as alternativas
+  </div>
+    <!-- ... repita o mesmo modelo para as 10 perguntas ... -->
     <div style="text-align: center;">
       <button type="button" onclick="submitQuiz()">Enviar</button>
     </div>
   </form>
-
   <div id="result"></div>
+</section>
 
-  <script>
-    function submitQuiz() {
-      const total = 10;
-      let score = 0;
-      let answers = {};
+<!-- Contato -->
+<section id="contato">
+  <h3>📩 Fale Conosco</h3>
+  <div class="form-container">
+    <form action="#" method="post">
+      <div class="form-row">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="text" name="sobrenome" placeholder="Sobrenome" required>
+      </div>
+      <div class="form-row">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="telefone" placeholder="Telefone">
+      </div>
+      <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</section>
 
-      for (let i = 1; i <= total; i++) {
-        const question = document.querySelector(`input[name="q${i}"]:checked`);
-        if (!question) {
-          alert("Responda todas as perguntas!");
-          return;
-        }
-        answers[`q${i}`] = question.value;
+<!-- Modal dos Autores -->
+<div id="modalAutores" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModal()">&times;</span>
+    <h2>Autores do Site</h2>
+    <div class="autor-grid">
+      <div class="autor">
+        <img src="piba.jfif" alt="Autor 1">
+        <h3>Arthur Corcini</h3>
+        <p>Matematica e suas tecnologias, ciencias da natureza - CPM</p>
+      </div>
+      <div class="autor">
+        <img src="thomas.jfif" alt="Autor 2">
+        <h3>Thomas Benatto</h3>
+        <p>Matematica e suas tecnologias, ciencias da natureza - CPM</p>
+      </div>
+      <div class="autor">
+        <img src="raphix.jfif" alt="Autor 3">
+        <h3>Raphael</h3>
+        <p>Matematica e suas tecnologias, ciencias da natureza - CPM</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Clube de Natação. Todos os direitos reservados.</p>
+  <button onclick="abrirModal()">Sobre os autores</button>
+</footer>
+
+<script>
+  function submitQuiz() {
+    const total = 10;
+    let score = 0;
+    let answers = {};
+    const correctAnswers = {
+      q1: "c", q2: "b", q3: "b", q4: "d", q5: "c",
+      q6: "d", q7: "c", q8: "b", q9: "c", q10: "d"
+    };
+
+    for (let i = 1; i <= total; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (!selected) {
+        alert("Responda todas as perguntas!");
+        return;
       }
-
-      const correctAnswers = {
-        q1: "c",
-        q2: "b",
-        q3: "b",
-        q4: "d",
-        q5: "c",
-        q6: "d",
-        q7: "c",
-        q8: "b",
-        q9: "c",
-        q10: "d"
-      };
-
-      for (let i = 1; i <= total; i++) {
-        if (answers[`q${i}`] === correctAnswers[`q${i}`]) {
-          score++;
-        }
-      }
-
-      localStorage.setItem("quizAnswers", JSON.stringify(answers));
-      document.getElementById("result").innerText = `🎯 Você acertou ${score}/${total} perguntas!`;
-
-      console.log("Respostas armazenadas:", answers);
+      answers[`q${i}`] = selected.value;
+      if (selected.value === correctAnswers[`q${i}`]) score++;
     }
-  </script>
+
+    localStorage.setItem("quizAnswers", JSON.stringify(answers));
+    document.getElementById("result").innerText = `🎯 Você acertou ${score}/${total} perguntas!`;
+  }
+
+  function abrirModal() {
+    document.getElementById('modalAutores').style.display = 'block';
+  }
+
+  function fecharModal() {
+    document.getElementById('modalAutores').style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('modalAutores');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
 
 </body>
 </html>
